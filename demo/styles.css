@@ -12,6 +12,60 @@ html {
   text-align: center;
 }
 
+#extra_fields {
+  z-index: -2;
+  /*background: #fafafa;*/
+  /*border: 2px solid #fafafa;
+  border-radius: 0 0 8px 8px;*/
+  padding: 18px 0px 8px 0px;
+  width: 516px;
+}
+
+
+#extra_fields .form-control {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  height: 30px;
+}
+
+#extra_fields select {
+ height:40px; background:transparent; 
+}
+ 
+
+.btn-primary {
+  color: white;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.btn {
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 12px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#address1 {
+  width: 500px;
+  font-size: 16px;
+}
 .tt-dropdown-menu,
 .gist {
   text-align: left;
@@ -35,7 +89,7 @@ code {
 /* ----------- */
 
 html {
-  font-family: 'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.2;
   color: #333;
@@ -88,7 +142,7 @@ h4 {
   width: 480px;
   height: 30px;
   padding: 8px 12px;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 30px;
   border: 2px solid #ccc;
   -webkit-border-radius: 8px;
@@ -102,7 +156,7 @@ h4 {
 }
 
 .typeahead:focus {
-  border: 2px solid #0097cf;
+  /*border: 2px solid #0097cf;*/
 }
 .typeahead.empty {
   border: 2px solid red;
@@ -164,7 +218,7 @@ h4 {
   border: 1px solid #DDD;
 }
 .address-panel {
-  float:left;
+  position: relative;
   width: 430px;
 
 }
