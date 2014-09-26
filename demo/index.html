@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>typeahead-addresspicker.js</title>
+  <title>Autocomplete Test</title>
   <!--[if IE]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -12,15 +12,23 @@
 
 <body>
     <div id="main">
-      <h2>Enter address</h2>
+      <!-- <h2>Autocomplete Test</h2> -->
       <div class="address-panel">
         <input id="address1" class="typeahead" type="text" placeholder="Enter an address">   
       </div>
 
       <div id="extra_fields" style="display: none">
-        <input class="form-control" id="city" placeholder="City" size="30"><input class="form-control" id="state" placeholder="State" size="2"><input class="form-control" id="zip" placeholder="Zip" size="9">
+        <input class="form-control" id="city" placeholder="City" size="22"><input class="form-control" id="state" placeholder="State" size="2"><input class="form-control" id="zip" placeholder="Zip" size="9">
         <a class="btn btn-primary" href="#">OK!</a>
-      </div> 
+
+        <div class="error" style="display: none">
+          <span>Fieldz b missin, yo!</span>
+        </div>
+        
+        <div class="success" style="display: none">
+          <span>All good!</span>
+        </div>
+      </div>
     </div>
 
  <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
@@ -42,58 +50,103 @@
     result.addressTypes().forEach(function(type) {
       html.push("  " + type + ": " + result.nameForType(type, true))
     })
-    // console.log(html.join('\n'));
-    // console.log(result.placeResult
-
     console.log(result)
-
-
-
-    // if (component.type == "postal_code") {
-    //   $('#state').val(component.postal_code())  
-    // }
-
-    // console.log(result.placeResult.address_components)
-    // $('#city').val(result.city())
   }
 
   $( function() {
-    var addressPicker = new AddressPicker();
+    var addressPicker = null;
     $address = $('#address1');
-    $address.typeahead({ autoselect: true}, {
-      displayKey: 'description',
-      source: addressPicker.ttAdapter(),
+
+    function createTypeahead() {
+      addressPicker = new AddressPicker();
+      $address.typeahead({ autoselect: true}, {
+        displayKey: 'description',
+        source: addressPicker.ttAdapter(),
+      });
+      addressPicker.bindDefaultTypeaheadEvent($address)
+    }
+    createTypeahead()
+    
+
+    $address.on('typeahead:opened', function (event) {
+      console.log('hi')
+      // $('#extra_fields').hide()
+      // console.log(event)
     });
-    addressPicker.bindDefaultTypeaheadEvent($address)
 
-    $(addressPicker).on('addresspicker:selected', function (event, result) {
+    $address.focus()
 
-      
+    function doUnbind() {
+      $address.off().on('keyup', function () {
+        console.log($address.val())
+        if ($address.val() == '') {
+          $('#extra_fields').fadeOut();
+          $('.success').hide();
 
-      var city = result.nameForType('sublocality') || result.nameForType('locality');
-      var state = result.nameForType('administrative_area_level_1', true);
-      var zip = result.nameForType('postal_code');
+          $('#city').removeClass('error');
+          $('#state').removeClass('error');
+          $('#zip').removeClass('error');
+          createTypeahead();
+          attachPickerEvents();
+        }
+        $address.focus()
+      });
+    }
 
-      // $('.tt-hint').fadeOut()
-      $('#city').val(city);
-      $('#state').val(state);
-      $('#zip').val(zip);
-      
-      str = $address.val()
-      re = new RegExp(", " + city)
-      str = str.replace(re, "")
-      re = new RegExp(", " + state)
-      str = str.replace(re, "")
+    function attachPickerEvents() {
+      $(addressPicker).off().on('addresspicker:selected', function (event, result) {
+        var city = result.nameForType('sublocality') || result.nameForType('locality');
+        var state = result.nameForType('administrative_area_level_1', true);
+        var zip = result.nameForType('postal_code');
 
-      $address.val(str)
+        // $('.tt-hint').fadeOut()
+        $('#city').val(city);
+        $('#state').val(state);
+        $('#zip').val(zip);
+        
+        str = $address.val()
+        re = new RegExp(", " + city)
+        str = str.replace(re, "")
+        re = new RegExp(", " + state)
+        str = str.replace(re, "")
 
-      displayResults(result, $('#response1'))
-      $('#extra_fields').fadeIn()
+        $address.val(str)
+        displayResults(result, $('#response1'))
+        $('#extra_fields').fadeIn()
 
-      addressPicker.unbindDefaultTypeaheadEvent($address)
-      // console.log(addressPicker.lastResult)
-    })
+        // addressPicker.unbindDefaultTypeaheadEvent($address)
+        $address.typeahead('destroy');
+        // $address.unbind();
 
+        doUnbind()
+      })
+    }
+
+    attachPickerEvents();
+
+    $('.btn-primary').on('click', function () {
+      var city = $('#city').val();
+      var state = $('#state').val();
+      var zip = $('#zip').val();
+
+      if (!city.length) {
+        $('#city').addClass('error');
+      }
+
+      if (!state.length) {
+        $('#state').addClass('error');
+      }
+
+      if (!zip.length) {
+        $('#zip').addClass('error');
+      }
+
+      if (!city.length || !state.length || !zip.length) {
+        $('.success').fadeOut();
+      } else {
+        $('.success').fadeIn();
+      }
+    });
   })
   </script>
 

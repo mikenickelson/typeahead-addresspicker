@@ -4,8 +4,13 @@
 html {
   overflow-y: scroll;
   *overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
 }
 
+body {
+  margin-top: 100px;
+}
 .container {
   max-width: 750px;
   margin: 0 auto;
@@ -21,6 +26,9 @@ html {
   width: 516px;
 }
 
+.error {
+  border-color: red !important;
+}
 
 #extra_fields .form-control {
   border: 2px solid #ccc;
@@ -28,6 +36,23 @@ html {
   padding: 8px 12px;
   font-size: 16px;
   height: 30px;
+
+  transition-duration: 0.5s;
+}
+
+.success {
+  padding: 8px;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 500px;
+  text-align: center;
+}
+
+
+.success span {
+  background: green;
+  color: white;
+  padding: 4px 8px;
 }
 
 #extra_fields select {
@@ -39,6 +64,7 @@ html {
   color: white;
   background-color: #428bca;
   border-color: #357ebd;
+  font-weight: bold;
 }
 
 .btn {

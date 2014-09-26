@@ -113,9 +113,8 @@
       };
 
       AddressPicker.prototype.initService = function() {
-        var api_key, options, p1, p2, self;
+        var options, p1, p2, self;
         self = this;
-        api_key = "AIzaSyBxTGJ1LRgLbe1KLGGitC0EDVlbkYJIBuQ";
         p1 = new google.maps.LatLng(37, 120);
         p2 = new google.maps.LatLng(40, 74);
         options = {

@@ -64,8 +64,6 @@
 
     initService: () ->
       self = @
-      api_key = "AIzaSyBxTGJ1LRgLbe1KLGGitC0EDVlbkYJIBuQ"
-
       p1 = new google.maps.LatLng(37, 120);
       p2 = new google.maps.LatLng(40, 74);
 

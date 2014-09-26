@@ -1549,9 +1549,17 @@
                     this.eventBus.trigger("autocompleted", datum.raw, datum.datasetName);
                 }
             },
+            _foo: function foo(str) {
+                arr = str.split(',')
+                if (arr.length > 2) {
+                  arr.pop()
+                  arr.pop()
+                }
+              return arr.join(" ");
+            },
             _select: function select(datum) {
-                this.input.setQuery(datum.value);
-                this.input.setInputValue(datum.value, true);
+                this.input.setQuery(this._foo(datum.value));
+                this.input.setInputValue(this._foo(datum.value), true);
                 this._setLanguageDirection();
                 this.eventBus.trigger("selected", datum.raw, datum.datasetName);
                 this.dropdown.close();
